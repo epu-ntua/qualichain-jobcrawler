@@ -30,6 +30,9 @@ class KarieraSpider(CrawlSpider):
     )
 
     def parse_items(self, response):
+        """This function receives Websites response and extracts the required fields from that website
+            using XPath Selectors
+        """
         items = JobcrawlerItem()
 
         items["job_post_url"] = response.request.url
