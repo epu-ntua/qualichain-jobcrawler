@@ -11,4 +11,6 @@ import scrapy
 class JobcrawlerItem(scrapy.Item):
     job_title = scrapy.Field()
     job_requirements = scrapy.Field()
+    job_post_url = scrapy.Field()
+    page_context = scrapy.Field()
     pass

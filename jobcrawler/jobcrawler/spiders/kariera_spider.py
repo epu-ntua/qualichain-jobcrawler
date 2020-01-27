@@ -4,6 +4,8 @@ import urllib.parse
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
+from jobcrawler.jobcrawler.items import JobcrawlerItem
+
 
 class KarieraSpider(CrawlSpider):
     """This is a Recursive Scrapy Spider builted for Kariera.gr"""
@@ -28,4 +30,8 @@ class KarieraSpider(CrawlSpider):
     )
 
     def parse_items(self, response):
-        return None
+        items = JobcrawlerItem()
+
+        items["job_post_url"] = response.request.url
+        items["page_context"] = response.text
+        return items
