@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+
+  crawler_db:
+    image: postgres:10
+    hostname: qchain_crawler_db
+    container_name: qchain_crawler_db
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - crawler_db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: crawler_db
+    networks:
+      - qchain
+
+networks:
+  qchain:
+    driver: bridge
+
+volumes:
+  crawler_db:
