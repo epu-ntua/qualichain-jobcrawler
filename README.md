@@ -21,3 +21,11 @@ cd jobcrawler/
 ```bash
     scrapy crawl kariera -o jobs.csv -t csv -a query="software engineer" 
 ```
+
+### Install Postgress using docker-compose
+
+cd to *config* folder
+
+```bash
+    docker-compose up -d
+```
