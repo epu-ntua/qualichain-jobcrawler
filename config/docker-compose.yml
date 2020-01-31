@@ -4,17 +4,17 @@ services:
 
   crawler_db:
     image: postgres:10
-    hostname: qchain_crawler_db
-    container_name: qchain_crawler_db
+    hostname: ${CONTAINER_NAME}
+    container_name: ${CONTAINER_NAME}
     restart: always
     ports:
       - 5432:5432
     volumes:
       - crawler_db:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: crawler_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     networks:
       - qchain
 
