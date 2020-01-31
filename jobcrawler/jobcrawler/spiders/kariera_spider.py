@@ -35,6 +35,9 @@ class KarieraSpider(CrawlSpider):
         """
         items = JobcrawlerItem()
 
+        extracted_title = response.xpath('//h1[@class="pb col big no-mb"]/text()').extract()[0]
+
+        items["job_title"] = extracted_title.strip('\n')
         items["job_post_url"] = response.request.url
         items["page_context"] = response.text
         return items
