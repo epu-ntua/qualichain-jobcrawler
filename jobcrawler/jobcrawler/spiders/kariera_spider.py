@@ -1,10 +1,9 @@
-import scrapy
 import urllib.parse
 
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
-from jobcrawler.jobcrawler.items import JobcrawlerItem
+from jobcrawler.items import JobcrawlerItem
 
 
 class KarieraSpider(CrawlSpider):
@@ -37,33 +36,40 @@ class KarieraSpider(CrawlSpider):
 
         extracted_title = response.xpath('//h1[@class="pb col big no-mb"]/text()').extract()[0]
 
-        first_level_requirements = response.xpath("//div[@id='job-requirements']//child::text()").extract()
-        if not first_level_requirements:
+        first_level_requirements = response.xpath(
+            """//div[@id='job-description']//child::*[
+            contains(text(), 'have') or contains(text(), 'Have') or contains(text(), 'need') 
+            or contains(text(), 'Need') or contains(text(), 'skills') or contains(text(), 'Skills')
+            or contains(text(), 'Requirements') or contains(text(), 'requirements') or contains(text(), 'be able') 
+            or contains(text(), 'Qualifications') or contains(text(), 'qualifications')
+            or contains(text(), 'criteria') or contains(text(), 'Criteria') or contains(text(), 'Role') 
+            or contains(text(), 'role') or contains(text(), 'Responsibilities') or contains(text(), 'responsibilities') 
+            or contains(text(), 'Description') or contains(text(), 'description') or contains(text(), 'Job') 
+            or contains(text(), 'job') or contains(text(), 'γνώσεις') or contains(text(), 'Γνώσεις') 
+            or contains(text(), 'Αρμοδιότητες') or contains(text, 'αρμοδιότητες') or contains(text(), 'Χαρακτηριστικά') 
+            or contains(text(), 'χαρακτηριστικά') or contains(text(), 'προσόντα') or contains(text(), 'Προσόντα')
+            or contains(text(), 'education') or contains(text(), 'Education')
+            ]//following::li/text()"""
+        ).extract()
+        first_level_requirements_list = list(filter(lambda item: item != '\n', first_level_requirements))
 
-            second_level_requirements = response.xpath(
-                """//div[@id='job-description']//child::*[
-                contains(text(), 'have') or contains(text(), 'Have') or contains(text(), 'need') 
-                or contains(text(), 'Need') or contains(text(), 'skills') or contains(text(), 'Skills')
-                or contains(text(), 'Requirements') or contains(text(), 'requirements') or contains(text(), 'be able') 
-                or contains(text(), 'Qualifications') or contains(text(), 'qualifications')
-                or contains(text(), 'criteria') or contains(text(), 'Criteria') or contains(text(), 'Role') 
-                or contains(text(), 'role') or contains(text(), 'Responsibilities') or contains(text(), 'responsibilities') 
-                or contains(text(), 'Description') or contains(text(), 'description') or contains(text(), 'Job') 
-                or contains(text(), 'job') or contains(text(), 'γνώσεις') or contains(text(), 'Γνώσεις') 
-                or contains(text(), 'Αρμοδιότητες') or contains(text, 'αρμοδιότητες') or contains(text(), 'Χαρακτηριστικά') 
-                or contains(text(), 'χαρακτηριστικά') or contains(text(), 'προσόντα') or contains(text(), 'Προσόντα')
-                ]//following::li/text()"""
-            ).extract()
-            job_requirements = second_level_requirements
+        if not first_level_requirements_list:
+
+            second_level_requirements = response.xpath("//div[@id='job-requirements']//child::text()").extract()
+            second_level_requirements_list = list(filter(lambda item: item != '\n', second_level_requirements))
 
             if not second_level_requirements:
-                job_requirements = response.xpath("//div[@id='job-description']//child::text()").extract()
+                third_level_requirements = response.xpath("//div[@id='job-description']//child::text()").extract()
+                job_requirements = list(filter(lambda item: item != '\n', third_level_requirements))
+            else:
+                job_requirements = second_level_requirements_list
+
         else:
-            job_requirements = first_level_requirements
+            job_requirements = first_level_requirements_list
 
         items["job_title"] = extracted_title.strip('\n')
-        items["job_requirements"] = " ".join(job_requirements)
+        items["job_requirements"] = " ".join(job_requirements).replace('\n', '')
 
         items["job_post_url"] = response.request.url
-        items["page_context"] = response.text
+        # items["page_context"] = response.text
         return items
