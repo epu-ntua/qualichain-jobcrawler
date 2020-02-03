@@ -14,12 +14,12 @@ class KarieraSpider(CrawlSpider):
     def __init__(self, *a, **kwargs):
         super().__init__(*a, **kwargs)
 
-        self.query = kwargs["query"]
+        self.job_positions = kwargs["job_positions"].split(",")
         self.allowed_domains = ["kariera.gr"]
         self.start_urls = [
             "https://www.kariera.gr/%CE%B8%CE%AD%CF%83%CE%B5%CE%B9%CF%82-%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CE%AF%CE%B1%CF%82?q={}".format(
-                urllib.parse.quote(self.query)
-            )
+                urllib.parse.quote(position)
+            ) for position in self.job_positions
         ]
 
     rules = (
