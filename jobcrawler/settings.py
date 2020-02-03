@@ -8,11 +8,18 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import os
 
 BOT_NAME = 'jobcrawler'
 
 SPIDER_MODULES = ['jobcrawler.spiders']
 NEWSPIDER_MODULE = 'jobcrawler.spiders'
+
+# POSTGRES SETTINGS
+POSTGRES_USER = os.environ.get("POSTGRES_USER", "postgres")
+POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "admin")
+POSTGRES_DB = os.environ.get("POSTGRES_DB", "crawler_db")
+POSTGRES_HOST = os.environ.get("CONTAINER_NAME", "localhost")
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
