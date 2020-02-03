@@ -33,3 +33,7 @@ Execute the following command
 ```bash
     scrapy crawl kariera -o jobs.csv -t csv -a job_positions="software engineer,developer" 
 ```
+
+### Project WIKI
+
+Access Job Crawler WIKI from this [link](https://github.com/epu-ntua/qualichain-jobcrawler/wiki)
