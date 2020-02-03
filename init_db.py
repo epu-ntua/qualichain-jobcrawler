@@ -1,4 +1,3 @@
-from jobcrawler.PostgresClient import PostgresClient
+from jobcrawler.postgres_client.PostgresClient import PostgresClient
 
 pg = PostgresClient()
-print(pg.engine)

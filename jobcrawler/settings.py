@@ -18,7 +18,7 @@ NEWSPIDER_MODULE = 'jobcrawler.spiders'
 # POSTGRES SETTINGS
 POSTGRES_USER = os.environ.get("POSTGRES_USER", "postgres")
 POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "admin")
-POSTGRES_DB = os.environ.get("POSTGRES_DB", "crawler_db")
+POSTGRES_DB = os.environ.get("POSTGRES_DB", "jobs")
 POSTGRES_HOST = os.environ.get("CONTAINER_NAME", "localhost")
 
 
