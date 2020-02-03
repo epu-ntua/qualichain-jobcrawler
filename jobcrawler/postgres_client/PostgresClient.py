@@ -16,7 +16,7 @@ class PostgresClient(object):
         )
         self.meta = MetaData()
         self.conn = self.engine.connect()
-        self.session = sessionmaker(bind=self.engine)
+        self.session = sessionmaker(bind=self.engine)()
 
     def initialize_tables(self):
         """
@@ -42,3 +42,4 @@ class PostgresClient(object):
             job_url=kwargs["job_url"]
         )
         self.session.add(new_job_post)
+        self.session.commit()
