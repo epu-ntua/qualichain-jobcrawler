@@ -16,11 +16,14 @@ class PostgresClient(object):
         )
         self.meta = MetaData()
         self.conn = self.engine.connect()
+        self.session = sessionmaker(bind=self.engine)
 
+    def initialize_tables(self):
+        """
+        This function is used to initialize Job Posting Tables
+        """
         # create Tables from Models
         Base.metadata.create_all(self.engine)
-
-        self.session = sessionmaker(bind=self.engine)
 
     def add_job_post(self, **kwargs):
         """
