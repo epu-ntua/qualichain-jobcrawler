@@ -51,7 +51,7 @@ class KarieraSpider(CrawlSpider):
             or contains(text(), 'education') or contains(text(), 'Education')
             ]//following::li/text()"""
         ).extract()
-        first_level_requirements_list = list(filter(lambda item: item != '\n', first_level_requirements))
+        first_level_requirements_list = list(filter(lambda item: item.strip() != '', first_level_requirements))
 
         if not first_level_requirements_list:
 
