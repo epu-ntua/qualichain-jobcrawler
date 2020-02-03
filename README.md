@@ -9,10 +9,6 @@ This is a Scrapy Crawler that is used to extract relevant information from Job p
 Firstly execute the following command
 
 ```bash
-cd jobcrawler/
-```
-
-```bash
    scrapy crawl kariera -a job_positions="software engineer,developer"
 ```
 
