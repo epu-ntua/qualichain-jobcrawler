@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'jobcrawler.spiders'
 POSTGRES_USER = os.environ.get("POSTGRES_USER", "postgres")
 POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "admin")
 POSTGRES_DB = os.environ.get("POSTGRES_DB", "jobs")
-POSTGRES_HOST = os.environ.get("CONTAINER_NAME", "localhost")
+POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "localhost")
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
