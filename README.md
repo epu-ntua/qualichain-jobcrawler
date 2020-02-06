@@ -36,6 +36,6 @@ scrapy crawl kariera -a job_positions="software engineer,developer"
 **Export data in csv using command line**
 
 ```bash
-scrapy crawl kariera -o jobs.csv -t csv -a job_positions="software engineer,developer" 
+scrapy crawl kariera -a job_positions="software engineer,developer" 
 ```
 
