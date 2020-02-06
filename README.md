@@ -4,23 +4,28 @@
 
 This is a Scrapy Crawler that is used to extract relevant information from Job posting websites
 
-### Install Postgress using docker-compose (Step 1)
+### Project WIKI
 
-cd to *config* folder
+Access Job Crawler WIKI from this [link](https://github.com/epu-ntua/qualichain-jobcrawler/wiki)
 
-```bash
-    docker-compose up -d
-```
+### Install Project using Docker
 
-### Initialize Job Database (Step 2)
-
-execute the following Python 3 Script:
+Install QualiChain Job Crawler using docker by executing the following bash commands
 
 ```bash
-    python init_db.py
+    cd config/
+
+    docker-compose up -d --build
 ```
 
-### Run Scrapy crawler (Step 3)
+Then trigger the spider by executing the docker command above
+
+```bash
+    docker exec -it job_crawler scrapy crawl kariera -o jobs.csv -t csv -a job_positions="software engineer,developer"
+```
+
+
+### Run QualiChain Job Crawler locally
 
 Execute the following command
 
@@ -34,6 +39,3 @@ Execute the following command
     scrapy crawl kariera -o jobs.csv -t csv -a job_positions="software engineer,developer" 
 ```
 
-### Project WIKI
-
-Access Job Crawler WIKI from this [link](https://github.com/epu-ntua/qualichain-jobcrawler/wiki)

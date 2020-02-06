@@ -11,3 +11,10 @@
 + Postgres Client object created
 + pipeline feed Postgres client with data
 + init_db script created to fill database with required models
+
+## 06/02/2020
++ Some changes on kariera.gr crawler
++ Some changes on project pipeline
++ Check if job posting record already exists in Postgres
++ Docker configuration added for Scrapy project
++ README.md changed
