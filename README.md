@@ -13,15 +13,15 @@ Access Job Crawler WIKI from this [link](https://github.com/epu-ntua/qualichain-
 Install QualiChain Job Crawler using docker by executing the following bash commands
 
 ```bash
-    cd config/
+cd config/
 
-    docker-compose up -d --build
+docker-compose up -d --build
 ```
 
 Then trigger the spider by executing the docker command above
 
 ```bash
-    docker exec -it job_crawler scrapy crawl kariera -o jobs.csv -t csv -a job_positions="software engineer,developer"
+docker exec -it job_crawler scrapy crawl kariera -o jobs.csv -t csv -a job_positions="software engineer,developer"
 ```
 
 
@@ -30,12 +30,12 @@ Then trigger the spider by executing the docker command above
 Execute the following command
 
 ```bash
-   scrapy crawl kariera -a job_positions="software engineer,developer"
+scrapy crawl kariera -a job_positions="software engineer,developer"
 ```
 
 **Export data in csv using command line**
 
 ```bash
-    scrapy crawl kariera -o jobs.csv -t csv -a job_positions="software engineer,developer" 
+scrapy crawl kariera -o jobs.csv -t csv -a job_positions="software engineer,developer" 
 ```
 
