@@ -14,5 +14,6 @@ class JobcrawlerItem(scrapy.Item):
     job_post_url = scrapy.Field()
     timestamp = scrapy.Field()
     full_html = scrapy.Field()
-    site = scrapy.Field()
+    site = scrapy.Field(),
+    full_text = scrapy.Field()
     pass

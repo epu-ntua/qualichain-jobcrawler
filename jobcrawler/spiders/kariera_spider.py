@@ -82,4 +82,5 @@ class KarieraSpider(CrawlSpider):
         items["timestamp"] = current_date_str
         items["full_html"] = response.text
         items["site"] = self.allowed_domains[0]
+        items["full_text"] = " ".join(response.xpath('//body//text()').re('(\w+)'))
         return items

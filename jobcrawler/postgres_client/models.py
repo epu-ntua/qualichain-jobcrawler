@@ -16,6 +16,7 @@ class JobPost(Base):
     full_html = Column(Text, nullable=True)
     site = Column(String(1024), nullable=True)
     language = Column(String(1024), nullable=True)
+    full_text = Column(Text, nullable=True)
 
     def __repr__(self):
         return '<JobPost model {}>'.format(self.id)

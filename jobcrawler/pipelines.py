@@ -48,6 +48,7 @@ class JobcrawlerPipeline(object):
                     full_html=item["full_html"],
                     timestamp=item["timestamp"],
                     site=item["site"],
-                    language=job_language
+                    language=job_language,
+                    full_text=item["full_text"]
                 )  # Store extracted items to Postgress
         return item
