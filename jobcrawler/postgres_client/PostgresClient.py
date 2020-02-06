@@ -43,3 +43,23 @@ class PostgresClient(object):
         )
         self.session.add(new_job_post)
         self.session.commit()
+
+    def check_if_record_exists(self, title, job_url):
+        """
+        The following function is used to check if the extracted job exists in DB
+
+        Args:
+            title: job title
+            job_url: job url
+
+        Returns: True/False
+        """
+        this_job_count = self.session.query(JobPost).filter(
+            JobPost.job_url == job_url,
+            JobPost.title == title
+        ).count()
+
+        if this_job_count:
+            return True
+        else:
+            return False
