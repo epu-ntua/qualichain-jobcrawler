@@ -21,15 +21,21 @@ class JobcrawlerPipeline(object):
             item: Scrapy item object
             spider: Spider instance
         """
-        if_record_exists = self.pg_client.check_if_record_exists(
-            title=item["job_title"],
-            job_url=item["job_url"]
-        )  # Check if record exists in Postgres
+        job_title = item["job_title"]
+        job_post_url = item["job_post_url"]
 
-        if not if_record_exists:
-            self.pg_client.add_job_post(
-                title=item["job_title"],
-                requirements=item["job_requirements"],
-                job_url=item["job_post_url"]
-            )  # Store extracted items to Postgress
+        if job_title and job_post_url:
+            # proceed to Postgress Record Identification if extracted items are valid
+
+            if_record_exists = self.pg_client.check_if_record_exists(
+                title=job_title,
+                job_url=job_post_url
+            )  # Check if record exists in Postgres
+
+            if not if_record_exists:
+                self.pg_client.add_job_post(
+                    title=job_title,
+                    requirements=item["job_requirements"],
+                    job_url=job_post_url
+                )  # Store extracted items to Postgress
         return item

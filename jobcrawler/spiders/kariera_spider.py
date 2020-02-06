@@ -34,7 +34,7 @@ class KarieraSpider(CrawlSpider):
         """
         items = JobcrawlerItem()
 
-        extracted_title = response.xpath('//h1[@class="pb col big no-mb"]/text()').extract()[0]
+        extracted_title = response.xpath('//h1[@class="pb col big no-mb"]/text()').extract()
 
         first_level_requirements = response.xpath(
             """//div[@id='job-description']//child::*[
@@ -67,7 +67,11 @@ class KarieraSpider(CrawlSpider):
         else:
             job_requirements = first_level_requirements_list
 
-        items["job_title"] = extracted_title.strip('\n')
+        if extracted_title:
+            items["job_title"] = extracted_title[0].strip('\n')
+        else:
+            items["job_title"] = None
+
         items["job_requirements"] = " ".join(job_requirements).replace('\n', '')
 
         items["job_post_url"] = response.request.url
