@@ -13,4 +13,4 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
-CMD bash docker/run.sh
+CMD bash config/run.sh

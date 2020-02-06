@@ -24,6 +24,7 @@ class PostgresClient(object):
         """
         # create Tables from Models
         Base.metadata.create_all(self.engine)
+        print("JobPost table initialized successfully")
 
     def add_job_post(self, **kwargs):
         """
