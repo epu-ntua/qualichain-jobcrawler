@@ -12,6 +12,9 @@ class JobPost(Base):
     title = Column(String(100), nullable=True)
     requirements = Column(Text, nullable=True)
     job_url = Column(String(1024), nullable=True)
+    timestamp = Column(String(1024), nullable=True)
+    full_html = Column(Text, nullable=True)
+    site = Column(String(1024), nullable=True)
 
     def __repr__(self):
         return '<JobPost model {}>'.format(self.id)

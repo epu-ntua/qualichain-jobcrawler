@@ -36,6 +36,9 @@ class JobcrawlerPipeline(object):
                 self.pg_client.add_job_post(
                     title=job_title,
                     requirements=item["job_requirements"],
-                    job_url=job_post_url
+                    job_url=job_post_url,
+                    full_html=item["full_html"],
+                    timestamp=item["timestamp"],
+                    site=item["site"]
                 )  # Store extracted items to Postgress
         return item

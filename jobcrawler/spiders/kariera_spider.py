@@ -2,6 +2,7 @@ import urllib.parse
 
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
+from datetime import datetime
 
 from jobcrawler.items import JobcrawlerItem
 
@@ -33,6 +34,8 @@ class KarieraSpider(CrawlSpider):
             using XPath Selectors
         """
         items = JobcrawlerItem()
+        current_date = datetime.now()
+        current_date_str = current_date.strftime("%b %d %Y %H:%M:%S")
 
         extracted_title = response.xpath('//h1[@class="pb col big no-mb"]/text()').extract()
 
@@ -49,6 +52,7 @@ class KarieraSpider(CrawlSpider):
             or contains(text(), 'Αρμοδιότητες') or contains(text, 'αρμοδιότητες') or contains(text(), 'Χαρακτηριστικά') 
             or contains(text(), 'χαρακτηριστικά') or contains(text(), 'προσόντα') or contains(text(), 'Προσόντα')
             or contains(text(), 'education') or contains(text(), 'Education')
+            or contains(text(), 'profile') or contains(text(), 'Profile')
             ]//following::li/text()"""
         ).extract()
         first_level_requirements_list = list(filter(lambda item: item.strip() != '', first_level_requirements))
@@ -75,5 +79,7 @@ class KarieraSpider(CrawlSpider):
         items["job_requirements"] = " ".join(job_requirements).replace('\n', '')
 
         items["job_post_url"] = response.request.url
-        # items["page_context"] = response.text
+        items["timestamp"] = current_date_str
+        items["full_html"] = response.text
+        items["site"] = self.allowed_domains[0]
         return items
