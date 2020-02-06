@@ -43,7 +43,8 @@ class PostgresClient(object):
             job_url=kwargs["job_url"],
             timestamp=kwargs["timestamp"],
             full_html=kwargs["full_html"],
-            site=kwargs["site"]
+            site=kwargs["site"],
+            language=kwargs["language"]
         )
         self.session.add(new_job_post)
         self.session.commit()
