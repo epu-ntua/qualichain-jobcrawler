@@ -18,35 +18,24 @@ services:
     networks:
       - qchain
 
-#  splash:
-#    image: scrapinghub/splash
-#    hostname: splash
-#    container_name: splash
-#    ports:
-#    - 5023:5023
-#    - 8050:8050
-#    - 8051:8051
-#    networks:
-#      - qchain
-
-#  job_crawler:
-#    hostname: ${CRAWLER_HOSTNAME}
-#    container_name: ${CRAWLER_HOSTNAME}
-#    restart: always
-#    build:
-#      context: ".."
-#      dockerfile: config/Dockerfile
-#      args:
-#        PROJECT_DIR: ${PROJECT_DIR}
-#    environment:
-#      POSTGRES_USER: ${POSTGRES_USER}
-#      POSTGRES_DB: ${POSTGRES_DB}
-#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-#      POSTGRES_HOST: ${CONTAINER_NAME}
-#    depends_on:
-#      - crawler_db
-#    networks:
-#      - qchain
+  job_crawler:
+    hostname: ${CRAWLER_HOSTNAME}
+    container_name: ${CRAWLER_HOSTNAME}
+    restart: always
+    build:
+      context: ".."
+      dockerfile: config/Dockerfile
+      args:
+        PROJECT_DIR: ${PROJECT_DIR}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: ${CONTAINER_NAME}
+    depends_on:
+      - crawler_db
+    networks:
+      - qchain
 
 networks:
   qchain:
