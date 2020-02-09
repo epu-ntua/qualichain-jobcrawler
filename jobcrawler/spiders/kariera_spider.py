@@ -5,6 +5,7 @@ from scrapy.linkextractors import LinkExtractor
 from datetime import datetime
 
 from jobcrawler.items import JobcrawlerItem
+from jobcrawler.settings import EXTENDED_REQUIREMENTS_STR
 
 
 class KarieraSpider(CrawlSpider):
@@ -23,6 +24,10 @@ class KarieraSpider(CrawlSpider):
             ) for position in self.job_positions
         ]
 
+        self.requirements_xpath = """//div[@id='job-description']//child::*[{}]//following::li/text()""".format(
+            EXTENDED_REQUIREMENTS_STR
+        )
+
     rules = (
         Rule(LinkExtractor(allow=('pg=[0-9]*')), follow=True),
         Rule(LinkExtractor(allow=(), restrict_xpaths=('//a[@class="job-title"]')), follow=True,
@@ -39,22 +44,7 @@ class KarieraSpider(CrawlSpider):
 
         extracted_title = response.xpath('//h1[@class="pb col big no-mb"]/text()').extract()
 
-        first_level_requirements = response.xpath(
-            """//div[@id='job-description']//child::*[
-            contains(text(), 'have') or contains(text(), 'Have') or contains(text(), 'need') 
-            or contains(text(), 'Need') or contains(text(), 'skills') or contains(text(), 'Skills')
-            or contains(text(), 'Requirements') or contains(text(), 'requirements') or contains(text(), 'be able') 
-            or contains(text(), 'Qualifications') or contains(text(), 'qualifications')
-            or contains(text(), 'criteria') or contains(text(), 'Criteria') or contains(text(), 'Role') 
-            or contains(text(), 'role') or contains(text(), 'Responsibilities') or contains(text(), 'responsibilities') 
-            or contains(text(), 'Description') or contains(text(), 'description') or contains(text(), 'Job') 
-            or contains(text(), 'job') or contains(text(), 'γνώσεις') or contains(text(), 'Γνώσεις') 
-            or contains(text(), 'Αρμοδιότητες') or contains(text, 'αρμοδιότητες') or contains(text(), 'Χαρακτηριστικά') 
-            or contains(text(), 'χαρακτηριστικά') or contains(text(), 'προσόντα') or contains(text(), 'Προσόντα')
-            or contains(text(), 'education') or contains(text(), 'Education')
-            or contains(text(), 'profile') or contains(text(), 'Profile')
-            ]//following::li/text()"""
-        ).extract()
+        first_level_requirements = response.xpath(self.requirements_xpath).extract()
         first_level_requirements_list = list(filter(lambda item: item.strip() != '', first_level_requirements))
 
         if not first_level_requirements_list:
