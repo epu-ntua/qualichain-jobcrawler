@@ -9,7 +9,7 @@ class JSMiddleware(object):
         """This middleware is applied on skywalker's start urls that are protected with JS"""
 
         # check response url
-        if spider.allowed_domains == ['skywalker.gr'] and 'aggelia/ergasias' not in request.url:
+        if (spider.allowed_domains == ['skywalker.gr'] and 'aggelia/ergasias' not in request.url) or (spider.allowed_domains == ["gr.indeed.com"] and 'viewjob' not in request.url):
 
             options = Options()  # Set webdriver options
             options.add_argument('--headless')

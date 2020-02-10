@@ -40,7 +40,9 @@ REQUIREMENTS_FLAGS = [
     "χαρακτηριστικά",
     "προσόντα",
     "education",
-    "profile"
+    "profile",
+    "engineering",
+    "knowledge"
 ]
 EXTENDED_REQUIREMENTS = list(map(
     lambda x: [
@@ -50,6 +52,9 @@ EXTENDED_REQUIREMENTS = list(map(
     ], REQUIREMENTS_FLAGS
 ))
 EXTENDED_REQUIREMENTS_STR = " or ".join(chain(*EXTENDED_REQUIREMENTS))
+
+# SPIDERS SETTINGS
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'jobcrawler (+http://www.yourdomain.com)'

@@ -14,6 +14,10 @@ class SkyWalkerSpider(Spider):
     """This is a Recursive Scrapy Spider builted for skywalker.gr"""
     name = "skywalker"
 
+    custom_settings = {
+        'DOWNLOAD_DELAY': 5,
+    }
+
     def __init__(self, *a, **kwargs):
         super().__init__(*a, **kwargs)
 
@@ -21,7 +25,7 @@ class SkyWalkerSpider(Spider):
         self.job_positions = kwargs["job_positions"].split(",")
 
         self.start_urls = [
-            "https://www.skywalker.gr/elGR/anazitisi/aggelies-ergasias?keywords={}&page=1".format(
+            "https://www.skywalker.gr/elGR/anazitisi/aggelies-ergasias?perPage=20&page=1&sortBy=relative&keywords={}".format(
                 quote(position)
             ) for position in self.job_positions
         ]
@@ -37,7 +41,12 @@ class SkyWalkerSpider(Spider):
         s = Selector(response)
 
         page_nums = s.xpath('//ul[@class="paging-container"]//a[not(@class="current")]/@data-page').extract()
-        last_page = int(page_nums[-1])
+        print(page_nums)
+
+        if page_nums:
+            last_page = int(page_nums[-1])
+        else:
+            last_page = 2
 
         for page in range(1, last_page):
             next_url = change_url_params(page_num=str(page), url=response.url)
@@ -48,6 +57,7 @@ class SkyWalkerSpider(Spider):
         s = Selector(response)
 
         jobs_per_site = s.xpath('//div[@class="col-lg-12 col-md-12 col-sm-12 aggelia-view-title"]//a/@href').extract()
+        print(jobs_per_site)
 
         for inner_site in jobs_per_site:
             url = urljoin("https://www.skywalker.gr/", inner_site)
