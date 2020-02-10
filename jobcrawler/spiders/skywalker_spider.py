@@ -74,7 +74,7 @@ class SkyWalkerSpider(Spider):
         items["site"] = self.allowed_domains[0]
         items["full_html"] = response.text
         items["job_post_url"] = response.request.url
-        items["full_text"] = " ".join(response.xpath('//body//text()').re('(\w+)'))
+        items["full_text"] = " ".join(response.xpath('//div[@id="aggelia-text"]//text()').re('(\w+)'))
 
         extracted_title = response.xpath('//h3[@id="aggelia-title"]/text()').extract()
         if extracted_title:
