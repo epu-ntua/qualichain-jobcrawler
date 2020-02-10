@@ -2,13 +2,11 @@ import scrapy
 
 from urllib.parse import urljoin, quote
 from scrapy import Selector
-from scrapy.spiders import Spider, CrawlSpider, Rule
+from scrapy.spiders import Spider
 from datetime import datetime
 
 from jobcrawler.items import JobcrawlerItem
 from jobcrawler.settings import EXTENDED_REQUIREMENTS_STR
-from jobcrawler.utils import change_url_params
-from scrapy.linkextractors import LinkExtractor
 
 
 class IndeedSpider(Spider):
@@ -52,7 +50,7 @@ class IndeedSpider(Spider):
         items["site"] = self.allowed_domains[0]
         items["full_html"] = response.text
         items["job_post_url"] = response.request.url
-        items["full_text"] = " ".join(response.xpath('//body//text()').re('(\w+)'))
+        items["full_text"] = " ".join(response.xpath('//div[@id="jobDescriptionText"]//text()').re('(\w+)'))
 
         extracted_title = response.xpath('//div[@class="icl-u-xs-mb--xs icl-u-xs-mt--none jobsearch-JobInfoHeader-title"]/text()').extract()
         if extracted_title:
