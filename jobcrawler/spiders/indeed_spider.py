@@ -23,11 +23,9 @@ class IndeedSpider(Spider):
             "https://gr.indeed.com/jobs?q=software+engineer"
         ]
 
-    # rules = (
-    #     Rule(LinkExtractor(restrict_xpaths=("//*[@class='title']//a")), follow=True),
-    #     Rule(LinkExtractor(restrict_xpaths=('//div[@class="title"]//a')), follow=True,
-    #          callback="parse_items"),
-    # )
+        self.requirements_xpath = """//div[@id='jobDescriptionText']//child::*[{}]//following-sibling::li/text()""".format(
+            EXTENDED_REQUIREMENTS_STR
+        )
 
     def parse(self, response):
         s = Selector(response)
@@ -45,4 +43,27 @@ class IndeedSpider(Spider):
             yield scrapy.Request(next_page_full_url, callback=self.parse)
 
     def parse_items(self, response):
-        print(response.url)
+        items = JobcrawlerItem()
+
+        current_date = datetime.now()
+        current_date_str = current_date.strftime("%b %d %Y %H:%M:%S")
+
+        items["timestamp"] = current_date_str
+        items["site"] = self.allowed_domains[0]
+        items["full_html"] = response.text
+        items["job_post_url"] = response.request.url
+        items["full_text"] = " ".join(response.xpath('//body//text()').re('(\w+)'))
+
+        extracted_title = response.xpath('//div[@class="icl-u-xs-mb--xs icl-u-xs-mt--none jobsearch-JobInfoHeader-title"]/text()').extract()
+        if extracted_title:
+            items["job_title"] = extracted_title[0]
+        else:
+            items["job_title"] = None
+
+        job_requirements = response.xpath(self.requirements_xpath).extract()
+        requirements_list = list(filter(lambda item: item.strip() != '', job_requirements))
+        items["job_requirements"] = " ".join(requirements_list).replace('\n', '')
+
+        return items
+
+

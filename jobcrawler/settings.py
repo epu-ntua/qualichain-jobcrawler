@@ -42,7 +42,8 @@ REQUIREMENTS_FLAGS = [
     "education",
     "profile",
     "engineering",
-    "knowledge"
+    "knowledge",
+    "experience"
 ]
 EXTENDED_REQUIREMENTS = list(map(
     lambda x: [
