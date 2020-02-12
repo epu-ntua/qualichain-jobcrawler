@@ -18,3 +18,8 @@
 + Check if job posting record already exists in Postgres
 + Docker configuration added for Scrapy project
 + README.md changed
+
+## 12/02/2020
++ Use docker selenium and webdriver for chrome
++ middleware that uses selenium is used to download js protected content
++ indeed, kariera, skywalker crawlers tested

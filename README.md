@@ -18,12 +18,23 @@ cd config/
 docker-compose up -d --build
 ```
 
-Then trigger the spider by executing the docker command above
+Then trigger the spider that extract data from `kariera.gr` by executing the docker command above
 
 ```bash
-docker exec -it job_crawler scrapy crawl kariera -o jobs.csv -t csv -a job_positions="software engineer,developer"
+docker exec -it job_crawler scrapy crawl kariera -a job_positions="software engineer,developer"
 ```
 
+Extract data from `gr.indeed.com` using this command
+
+```bash
+docker exec -it job_crawler scrapy crawl indeed -a job_positions="software engineer,developer"
+```
+
+Extract data from `skywalker.gr` using this command
+
+```bash
+docker exec -it job_crawler scrapy crawl skywalker -a job_positions="software engineer,developer"
+```
 
 ### Run QualiChain Job Crawler locally
 
@@ -36,6 +47,6 @@ scrapy crawl kariera -a job_positions="software engineer,developer"
 **Export data in csv using command line**
 
 ```bash
-scrapy crawl kariera -a job_positions="software engineer,developer" 
+scrapy crawl kariera -o jobs.csv -t csv -a job_positions="software engineer,developer" 
 ```
 
