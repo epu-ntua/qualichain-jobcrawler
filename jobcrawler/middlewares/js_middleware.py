@@ -2,16 +2,23 @@ from scrapy.http import HtmlResponse
 from selenium import webdriver
 
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+from jobcrawler.settings import SELENIUM_HUB_EXECUTOR
 
 
 class JSMiddleware(object):
 
     def __init__(self):
         options = Options()  # Set webdriver options
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         options.add_argument('--disable-gpu')
 
-        self.driver = webdriver.Chrome('C:/webdrivers/chromedriver.exe', chrome_options=options)
+        self.driver = webdriver.Remote(
+            command_executor=SELENIUM_HUB_EXECUTOR,
+            desired_capabilities=DesiredCapabilities.CHROME)
+
+        # self.driver = webdriver.Chrome('C:/webdrivers/chromedriver.exe', chrome_options=options)
 
     def process_request(self, request, spider):
         """This middleware is applied on skywalker's start urls that are protected with JS"""

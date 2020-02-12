@@ -23,7 +23,7 @@ POSTGRES_DB = os.environ.get("POSTGRES_DB", "jobs")
 POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "localhost")
 
 # SELENIUM SETTINGS
-SELENIUM_HUB = os.environ.get("")
+SELENIUM_HUB_EXECUTOR = os.environ.get("SELENIUM_HUB_EXECUTOR", "http://localhost:4444/wd/hub")
 
 # APPLICATION SETTINGS
 CONTAINS_XPATH = "contains(text(), '{}')"
