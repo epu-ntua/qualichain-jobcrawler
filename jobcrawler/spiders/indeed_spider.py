@@ -17,8 +17,12 @@ class IndeedSpider(Spider):
         super().__init__(*a, **kwargs)
 
         self.allowed_domains = ["gr.indeed.com"]
+        self.job_positions = kwargs["job_positions"].split(',')
+
         self.start_urls = [
-            "https://gr.indeed.com/jobs?q=software+engineer"
+            "https://gr.indeed.com/jobs?q={}".format(
+                quote(position)
+            )for position in self.job_positions
         ]
 
     def parse(self, response):

@@ -41,7 +41,6 @@ class SkyWalkerSpider(Spider):
         s = Selector(response)
 
         page_nums = s.xpath('//ul[@class="paging-container"]//a[not(@class="current")]/@data-page').extract()
-        print(page_nums)
 
         if page_nums:
             last_page = int(page_nums[-1])
