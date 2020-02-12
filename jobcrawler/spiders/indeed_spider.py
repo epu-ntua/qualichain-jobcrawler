@@ -26,6 +26,7 @@ class IndeedSpider(Spider):
         ]
 
     def parse(self, response):
+        """This function is used to find more result pages"""
         s = Selector(response)
 
         job_postings = s.xpath(
@@ -41,6 +42,7 @@ class IndeedSpider(Spider):
             yield scrapy.Request(next_page_full_url, callback=self.parse)
 
     def parse_items(self, response):
+        """This function is used to extract jobs data from Indeed internal urls"""
         items = JobcrawlerItem()
 
         current_date = datetime.now()
