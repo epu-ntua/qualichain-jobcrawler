@@ -27,8 +27,6 @@ class JobcrawlerPipeline(object):
         job_post_url = item["job_post_url"]
         job_requirements = item["job_requirements"]
 
-        print(job_title)
-
         try:
             job_language = detect(job_requirements)
         except Exception as ex:

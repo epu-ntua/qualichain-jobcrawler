@@ -9,7 +9,7 @@ class JobPost(Base):
     __tablename__ = "job_post"
 
     id = Column(Integer, primary_key=True, nullable=False)
-    title = Column(String(100), nullable=True)
+    title = Column(String(1024), nullable=True)
     requirements = Column(Text, nullable=True)
     job_url = Column(String(1024), nullable=True)
     timestamp = Column(String(1024), nullable=True)
