@@ -45,22 +45,22 @@ services:
     hostname: ${HUB_HOSTNAME}
     ports:
       - ${HUB_PORT}:4444
-    depends_on:
-      - crawler_db
     networks:
       - qchain
     environment:
       - GRID_BROWSER_TIMEOUT=120000
       - GRID_TIMEOUT=120000
       - GRID_CLEAN_UP_CYCLE=60000
-      - GRID_MAX_SESSION=50
+      - GRID_MAX_SESSION=500
       - GRID_MAX_INSTANCES=3
       - JVM_OPTS=-Xmx10g
       - GRID_JETTY_MAX_THREADS=1500
     shm_size: 10g
 
-  chrome:
-    image: selenium/node-chrome:3.14.0-krypton
+  firefox:
+    image: selenium/node-firefox:3.141
+    hostname: ${NODE_HOSTNAME}
+    container_name: ${NODE_HOSTNAME}
     environment:
       - HUB_PORT_4444_TCP_ADDR=${HUB_HOSTNAME}
       - HUB_PORT_4444_TCP_PORT=${HUB_PORT}
@@ -69,10 +69,13 @@ services:
       - NODE_MAX_SESSION=500
       - NODE_SELENIUM_PROTOCOL=WebDriver
       - JVM_OPTS=-Xmx24g
+      - throwOnCapabilityNotPresent=true
     ports:
       - 5900
     depends_on:
       - selenium-hub
+    networks:
+      - qchain
     volumes:
       - /dev/shm:/dev/shm --privileged
 

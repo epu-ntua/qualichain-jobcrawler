@@ -16,7 +16,7 @@ class JSMiddleware(object):
 
         self.driver = webdriver.Remote(
             command_executor=SELENIUM_HUB_EXECUTOR,
-            desired_capabilities=DesiredCapabilities.CHROME
+            desired_capabilities=DesiredCapabilities.FIREFOX
         )
 
         # self.driver = webdriver.Chrome('C:/webdrivers/chromedriver.exe', chrome_options=options)

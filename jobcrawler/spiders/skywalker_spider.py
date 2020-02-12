@@ -14,10 +14,6 @@ class SkyWalkerSpider(Spider):
     """This is a Recursive Scrapy Spider builted for skywalker.gr"""
     name = "skywalker"
 
-    custom_settings = {
-        'DOWNLOAD_DELAY': 5,
-    }
-
     def __init__(self, *a, **kwargs):
         super().__init__(*a, **kwargs)
 
