@@ -1,4 +1,6 @@
 from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium import webdriver
 
 
 def change_url_params(url, page_num):
@@ -22,3 +24,14 @@ def change_url_params(url, page_num):
     url_parts[4] = urlencode(query)
     updated_url = urlunparse(url_parts)
     return updated_url
+
+
+def get_driver():
+    options = webdriver.ChromeOptions()
+
+    options.add_argument('--headless')
+
+    driver = webdriver.Remote(
+        command_executor='http://localhost:4444/wd/hub',
+        desired_capabilities=DesiredCapabilities.CHROME
+    )

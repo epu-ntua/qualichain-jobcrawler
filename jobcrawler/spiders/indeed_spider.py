@@ -21,10 +21,6 @@ class IndeedSpider(Spider):
             "https://gr.indeed.com/jobs?q=software+engineer"
         ]
 
-        self.requirements_xpath = """//div[@id='jobDescriptionText']//child::*[{}]//following-sibling::li/text()""".format(
-            EXTENDED_REQUIREMENTS_STR
-        )
-
     def parse(self, response):
         s = Selector(response)
 
@@ -52,13 +48,21 @@ class IndeedSpider(Spider):
         items["job_post_url"] = response.request.url
         items["full_text"] = " ".join(response.xpath('//div[@id="jobDescriptionText"]//text()').re('(\w+)'))
 
-        extracted_title = response.xpath('//div[@class="icl-u-xs-mb--xs icl-u-xs-mt--none jobsearch-JobInfoHeader-title"]/text()').extract()
+        extracted_title = response.xpath('//h3[@class="icl-u-xs-mb--xs icl-u-xs-mt--none jobsearch-JobInfoHeader-title"]/text()').extract()
         if extracted_title:
             items["job_title"] = extracted_title[0]
         else:
             items["job_title"] = None
 
-        job_requirements = response.xpath(self.requirements_xpath).extract()
+        job_requirements_li = response.xpath("""//div[@id='jobDescriptionText']//child::*[{}]//following-sibling::li/text()""".
+                                          format(EXTENDED_REQUIREMENTS_STR)).extract()
+
+        if job_requirements_li:
+            job_requirements = job_requirements_li
+        else:
+            job_requirements = response.xpath("""//div[@id='jobDescriptionText']//child::*[{}]//following::p/text()""".
+                                          format(EXTENDED_REQUIREMENTS_STR)).extract()
+
         requirements_list = list(filter(lambda item: item.strip() != '', job_requirements))
         items["job_requirements"] = " ".join(requirements_list).replace('\n', '')
 

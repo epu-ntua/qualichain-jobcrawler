@@ -22,6 +22,9 @@ POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "admin")
 POSTGRES_DB = os.environ.get("POSTGRES_DB", "jobs")
 POSTGRES_HOST = os.environ.get("POSTGRES_HOST", "localhost")
 
+# SELENIUM SETTINGS
+SELENIUM_HUB = os.environ.get("")
+
 # APPLICATION SETTINGS
 CONTAINS_XPATH = "contains(text(), '{}')"
 REQUIREMENTS_FLAGS = [
