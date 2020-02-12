@@ -16,7 +16,8 @@ class JSMiddleware(object):
 
         self.driver = webdriver.Remote(
             command_executor=SELENIUM_HUB_EXECUTOR,
-            desired_capabilities=DesiredCapabilities.CHROME)
+            desired_capabilities=DesiredCapabilities.CHROME
+        )
 
         # self.driver = webdriver.Chrome('C:/webdrivers/chromedriver.exe', chrome_options=options)
 
@@ -26,11 +27,10 @@ class JSMiddleware(object):
         # check response url
         if (spider.allowed_domains == ['skywalker.gr'] and 'aggelia/ergasias' not in request.url) or (
                 spider.allowed_domains == ["gr.indeed.com"] and 'viewjob' not in request.url):
-            # Initialize webdriver for Chrome
 
             self.driver.get(request.url)
-
             body = self.driver.page_source  # get page source
+
             return HtmlResponse(self.driver.current_url, body=body, encoding='utf-8', request=request)
 
     def spider_closed(self, spider):
