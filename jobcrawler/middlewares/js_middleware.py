@@ -10,13 +10,16 @@ from jobcrawler.settings import SELENIUM_HUB_EXECUTOR
 class JSMiddleware(object):
 
     def __init__(self):
+        firefox_capabilities = DesiredCapabilities.FIREFOX
+        firefox_capabilities['marionette'] = True
+
         options = Options()  # Set webdriver options
         options.add_argument('--headless')
         options.add_argument('--disable-gpu')
 
         self.driver = webdriver.Remote(
             command_executor=SELENIUM_HUB_EXECUTOR,
-            desired_capabilities=DesiredCapabilities.FIREFOX
+            desired_capabilities=firefox_capabilities
         )
 
         # self.driver = webdriver.Chrome('C:/webdrivers/chromedriver.exe', chrome_options=options)
