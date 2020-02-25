@@ -11,6 +11,7 @@ services:
       - 5432:5432
     volumes:
       - crawler_db:/var/lib/postgresql/data
+      - ./curriculum/curriculum.sql:/docker-entrypoint-initdb.d/curriculum.sql
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
