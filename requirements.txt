@@ -24,7 +24,7 @@ PyDispatcher==2.0.5
 PyHamcrest==2.0.0
 pyOpenSSL==19.1.0
 queuelib==1.5.0
-requests==2.22.0
+requests==2.32.0
 Scrapy==2.11.1
 scrapy-splash==0.7.2
 selenium==3.141.0
